@@ -19,7 +19,7 @@ const page = async () => {
           </div>
 
           <div className="flex flex-col gap-1 items-center">
-            {isAuth && <Button className={'mt-1.5'}>go to Chats</Button>}
+            {isAuth && <Button className={"mt-1.5"}>go to Chats</Button>}
             <p className="text-slate-600 max-w-xl">
               join millions of students, researchers and professionals to
               instantly answer questions and understand research with ai
