@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 import { LogIn } from "lucide-react";
+import FileUpload from "@/core/components/templates/FileUpload";
 
 const page = async () => {
   const { userId } = await auth();
@@ -28,7 +29,7 @@ const page = async () => {
 
           <div className="w-full mt-2">
             {isAuth ? (
-              <div>fileUpload</div>
+              <FileUpload />
             ) : (
               <Link href={"/sign-in"}>
                 <Button className="cursor-pointer">
