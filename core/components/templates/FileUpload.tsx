@@ -14,7 +14,8 @@ const FileUpload = () => {
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
 
-      if (!file) return;
+      if (file.size > 10 * 1024 * 1024) {
+      }
 
       await uploadToSupabase(file);
     },
