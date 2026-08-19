@@ -26,14 +26,14 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      >
-        <body className="min-h-full flex flex-col">
-          <Provider>{children}</Provider>
-        </body>
-      </html>
+      <Provider>
+        <html
+          lang="en"
+          className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        >
+          <body className="min-h-full flex flex-col">{children}</body>
+        </html>
+      </Provider>
     </ClerkProvider>
   );
 }
