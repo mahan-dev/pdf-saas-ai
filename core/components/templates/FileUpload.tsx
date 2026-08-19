@@ -26,7 +26,7 @@ const FileUpload = () => {
 
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
-r
+
       if (file.size > 10 * 1024 * 1024) {
         toast.error("File too large > 10MB");
         return;
@@ -37,7 +37,7 @@ r
         console.log(data, "data coming from the supabase");
 
         if (!data?.id || !data?.path) {
-          toast.eror("data failed", { duration: 2000 });
+          toast.error("data failed", { duration: 2000 });
           return;
         }
 
