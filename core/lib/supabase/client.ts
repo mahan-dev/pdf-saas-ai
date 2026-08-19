@@ -8,7 +8,7 @@ export const uploadToSupabase = async (file: File) => {
     );
 
     const fileExtension = file.name.split(".").pop();
-    const filePath = `/${crypto.randomUUID()}.${fileExtension}`;
+    const filePath = `/uploads/${crypto.randomUUID()}.${fileExtension}`;
 
     const { data, error } = await supabase.storage
       .from("pdf - saas")

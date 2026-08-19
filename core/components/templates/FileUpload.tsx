@@ -2,17 +2,25 @@
 
 import { Inbox, Loader2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
-import { uploadToSupabase } from "@/core/lib/supabase/client";
+
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { toast } from "sonner";
 import { useState } from "react";
+import {
+  dropHandler,
+  type CreateChatInput,
+  type CreateChatResponse,
+} from "@/core/helper/dropHandler";
 
 const FileUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async ({ id, path }: { id: string; path: string }) => {
+  const { mutate, isPending } = useMutation<
+    CreateChatResponse,
+    Error,
+    CreateChatInput
+  >({
+    mutationFn: async ({ id, path }) => {
       const { data } = await axios.post("/api/create-chat", { id, path });
       return data;
     },
@@ -25,33 +33,7 @@ const FileUpload = () => {
     maxFiles: 1,
 
     onDrop: async (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file.size > 10 * 1024 * 1024) {
-        toast.error("File too large > 10MB");
-        return;
-      }
-      try {
-        setIsUploading(true);
-        const data = await uploadToSupabase(file);
-        console.log(data, "data coming from the supabase");
-
-        if (!data?.id || !data?.path) {
-          toast.error("data failed", { duration: 2000 });
-          return;
-        }
-
-        mutate(data, {
-          onSuccess: (data) => {
-            console.log(data);
-            toast.success(data.message, { position: "top-center" });
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsUploading(false);
-      }
+      await dropHandler({ acceptedFiles, setIsUploading, mutate });
     },
   });
 
