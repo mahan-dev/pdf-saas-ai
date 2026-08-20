@@ -49,6 +49,9 @@ export const dropHandler = async ({
         console.log(data);
         toast.success(data.message, { position: "top-center" });
       },
+      onError: (error) => {
+        console.log("something wen't wrong ", error);
+      },
     });
   } catch (error) {
     console.log(error);

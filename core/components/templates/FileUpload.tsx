@@ -48,7 +48,10 @@ const FileUpload = () => {
         <input {...getInputProps()} />
 
         {isUploading || isPending ? (
-          <Loader2 className="w-12 h-12 animate-spin" />
+          <>
+            <Loader2 className="w-12 h-12 text-purple-500 animate-spin" />
+            <p className=" text-[0.9rem] text-slate-500">Processing...</p>
+          </>
         ) : (
           <>
             <Inbox className="h-10 w-10 text-purple-500" />
