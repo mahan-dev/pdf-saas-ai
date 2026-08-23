@@ -33,8 +33,8 @@ const downloadFromSupabase = async (filePath: string) => {
   }
 };
 
-export const getSupabaseUrl = (fileKey: string) => {
-  const { data } = supabase.storage.from("pdf - saas").getPublicUrl(fileKey);
+export const getSupabaseUrl =async(fileKey: string) => {
+  const { data } = await supabase.storage.from("pdf - saas").getPublicUrl(fileKey);
 
   if (!data) {
     console.log("can't get url from supabase ...");
