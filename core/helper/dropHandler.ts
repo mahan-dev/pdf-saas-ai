@@ -30,8 +30,16 @@ export const dropHandler = async ({
 }: DropProps) => {
   const file = acceptedFiles[0];
 
+  if (!file) {
+    toast.error("file should be pdf !", {
+      duration: 2000,
+      position: "top-center",
+    });
+    return;
+  }
+
   if (file.size > 10 * 1024 * 1024) {
-    toast.error("File too large > 10MB");
+    toast.error("File too large > 10MB", { duration: 2000 });
     return;
   }
   try {
@@ -47,7 +55,7 @@ export const dropHandler = async ({
     mutate(data, {
       onSuccess: (data) => {
         console.log(data);
-        toast.success(data.message, { position: "top-center" });
+        toast.success(data.message || "Done", { position: "top-center" });
       },
       onError: (error) => {
         console.log("something wen't wrong ", error);

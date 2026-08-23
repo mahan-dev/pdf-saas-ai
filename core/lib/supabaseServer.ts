@@ -7,7 +7,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
 );
 
-const downloadFromS3 = async (filePath: string) => {
+const downloadFromSupabase = async (filePath: string) => {
   try {
     const { data, error } = await supabase.storage
       .from("pdf - saas")
@@ -33,4 +33,15 @@ const downloadFromS3 = async (filePath: string) => {
   }
 };
 
-export { downloadFromS3 };
+export const getSupabaseUrl = (fileKey: string) => {
+  const { data } = supabase.storage.from("pdf - saas").getPublicUrl(fileKey);
+
+  if (!data) {
+    console.log("can't get url from supabase ...");
+    return;
+  }
+
+  return data.publicUrl;
+};
+
+export { downloadFromSupabase };
