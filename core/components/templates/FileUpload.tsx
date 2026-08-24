@@ -6,11 +6,13 @@ import { useDropzone } from "react-dropzone";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+
 import {
   dropHandler,
   type CreateChatInput,
   type CreateChatResponse,
 } from "@/core/helper/dropHandler";
+import { useRouter } from "next/navigation";
 
 const FileUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -26,6 +28,7 @@ const FileUpload = () => {
     },
   });
 
+  const router= useRouter()
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/pdf": [".pdf"],
@@ -33,7 +36,7 @@ const FileUpload = () => {
     maxFiles: 1,
 
     onDrop: async (acceptedFiles) => {
-      await dropHandler({ acceptedFiles, setIsUploading, mutate });
+      await dropHandler({ acceptedFiles, setIsUploading, mutate, router });
     },
   });
 

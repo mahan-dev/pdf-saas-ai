@@ -16,6 +16,7 @@ export const POST = async (req: NextRequest) => {
       { status: 401 },
     );
   }
+
   try {
     const body = await req.json();
     const { id, path } = body;
@@ -24,7 +25,7 @@ export const POST = async (req: NextRequest) => {
 
     await loadSupabaseIntoPinecone(path);
 
-    const pdfUrl = await getSupabaseUrl(path);
+    const pdfUrl = getSupabaseUrl(path);
     if (!pdfUrl)
       return NextResponse.json(
         { status: "Failed", error: "Couldn't generate pdfUrl link" },

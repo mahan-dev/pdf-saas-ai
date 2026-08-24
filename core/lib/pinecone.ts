@@ -7,6 +7,7 @@ import { getEmbeddings } from "@/core/lib/embeddings";
 import { Document } from "@langchain/core/documents";
 import md5 from "md5";
 import { convertToAscii } from "./utils";
+import { pineconeUtils } from "../utils/pinecone";
 
 let pinecone: Pinecone | null = null;
 
@@ -35,11 +36,12 @@ const loadSupabaseIntoPinecone = async (fileKey: string) => {
 
   const client = await getPinecone();
 
-  const piconeIndex = client.index({ name: "pdf-saas-vector" });
+  // const piconeIndex = client.index({ name: "pdf-saas-vector" });
+  const piconeIndex = client.index({ name: "pdf-saas-2" });
   console.log("inserting vectors into pinecone");
 
   const nameSpace = convertToAscii(fileKey);
-  // pinecone.chun
+  await pineconeUtils(vectors, piconeIndex, nameSpace);
 };
 
 const embedDocument = async (doc: Document): Promise<PineconeRecord> => {
@@ -55,7 +57,7 @@ const embedDocument = async (doc: Document): Promise<PineconeRecord> => {
       },
     };
   } catch (error) {
-    console.log("error embedding files");
+    console.log("error embedding files", error);
     throw Error;
   }
 };

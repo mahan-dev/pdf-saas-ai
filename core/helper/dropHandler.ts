@@ -2,6 +2,8 @@ import { toast } from "sonner";
 import { uploadToSupabase } from "../lib/supabase/client";
 import { Dispatch, SetStateAction } from "react";
 import { UseMutateFunction } from "@tanstack/react-query";
+
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 export type CreateChatInput = {
   id: string;
   path: string;
@@ -21,12 +23,14 @@ interface DropProps {
     CreateChatInput,
     unknown
   >;
+  router: AppRouterInstance;
 }
 
 export const dropHandler = async ({
   acceptedFiles,
   setIsUploading,
   mutate,
+  router,
 }: DropProps) => {
   const file = acceptedFiles[0];
 
@@ -53,12 +57,16 @@ export const dropHandler = async ({
     }
 
     mutate(data, {
-      onSuccess: (data) => {
-        console.log(data);
-        toast.success(data.message || "Done", { position: "top-center" });
+      onSuccess: ({ chat_id }) => {
+        console.log(chat_id);
+        router.push(`/chat/${chat_id}`);
+        toast.success("Chat has been created !", { position: "top-center" });
       },
       onError: (error) => {
         console.log("something wen't wrong ", error);
+        toast.error("something wen't wrong", {
+          position: "top-center",
+        });
       },
     });
   } catch (error) {
