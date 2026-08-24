@@ -25,16 +25,13 @@ const downloadFromSupabase = async (filePath: string) => {
     const buffer = Buffer.from(await data.arrayBuffer());
     fs.writeFileSync(fileName, buffer);
     return fileName;
-
-    // console.log("Upload successful:", data);
-    // return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getSupabaseUrl =(fileKey: string) => {
-  const { data } =  supabase.storage.from("pdf - saas").getPublicUrl(fileKey);
+export const getSupabaseUrl = (fileKey: string) => {
+  const { data } = supabase.storage.from("pdf - saas").getPublicUrl(fileKey);
 
   if (!data) {
     console.log("can't get url from supabase ...");

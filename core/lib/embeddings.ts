@@ -14,7 +14,7 @@ const getEmbeddings = async (text: string): Promise<number[]> => {
       // input: text.replace(/\n/g, " "),
       // encoding_format: "float",
     });
-
+ 
     console.log(response.embeddings);
 
     return response.embeddings?.[0].values ?? [];

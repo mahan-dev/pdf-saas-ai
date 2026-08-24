@@ -32,11 +32,12 @@ const loadSupabaseIntoPinecone = async (fileKey: string) => {
   const documents = await Promise.all(pages.map(prepareDocument));
   // ? Vectorize and embed individual documents
 
-  const vectors = await Promise.all(documents.flat().map(embedDocument));
+  const vectors = (await Promise.all(
+    documents.flat().map(embedDocument),
+  )) as PineconeRecord[];
 
   const client = await getPinecone();
 
-  // const piconeIndex = client.index({ name: "pdf-saas-vector" });
   const piconeIndex = client.index({ name: "pdf-saas-2" });
   console.log("inserting vectors into pinecone");
 
