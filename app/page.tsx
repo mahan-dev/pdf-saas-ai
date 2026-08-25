@@ -12,9 +12,9 @@ const page = async () => {
   const isAuth = !!userId;
 
   return (
-    <div className=" min-h-screen flex items-center justify-center">
+    <div className=" min-h-screen  flex items-center justify-center  bg-linear-to-r from-indigo-300 to-purple-400">
       <div className="absolute top-1/2  left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex  flex-col justify-center items-center">
           <div className="flex gap-1.5 items-center">
             <h1 className="text-5xl font-bold ">Chat with any PDF</h1>
             <UserButton afterSwitchSessionUrl="/" />

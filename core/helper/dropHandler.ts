@@ -12,17 +12,13 @@ export type CreateChatInput = {
 export type CreateChatResponse = {
   status: string;
   message: string;
+  chat_id?: number;
 };
 
 interface DropProps {
   acceptedFiles: File[];
   setIsUploading: Dispatch<SetStateAction<boolean>>;
-  mutate: UseMutateFunction<
-    CreateChatResponse,
-    Error,
-    CreateChatInput,
-    unknown
-  >;
+  mutate: UseMutateFunction<CreateChatResponse, Error, CreateChatInput>;
   router: AppRouterInstance;
 }
 
@@ -46,6 +42,11 @@ export const dropHandler = async ({
     toast.error("File too large > 10MB", { duration: 2000 });
     return;
   }
+
+  const NotificationHandler = async () => {
+    return await new Promise((resolver) => setTimeout(resolver, 1000));
+  };
+
   try {
     setIsUploading(true);
     const data = await uploadToSupabase(file);
@@ -57,10 +58,11 @@ export const dropHandler = async ({
     }
 
     mutate(data, {
-      onSuccess: ({ chat_id }) => {
-        console.log(chat_id);
-        router.push(`/chat/${chat_id}`);
+      onSuccess: async ({ chat_id }) => {
+        console.log("🚀 ~ dropHandler.ts:56 -> chat_id: ", chat_id);
         toast.success("Chat has been created !", { position: "top-center" });
+        await NotificationHandler();
+        router.push(`/chat/${chat_id}`);
       },
       onError: (error) => {
         console.log("something wen't wrong ", error);
