@@ -7,6 +7,8 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 export type CreateChatInput = {
   id: string;
   path: string;
+  fullPath: string;
+  fileName: string;
 };
 
 export type CreateChatResponse = {
@@ -29,6 +31,7 @@ export const dropHandler = async ({
   router,
 }: DropProps) => {
   const file = acceptedFiles[0];
+  console.log("🎤 ~ dropHandler.ts:31 -> file: ", file);
 
   if (!file) {
     toast.error("file should be pdf !", {
@@ -50,10 +53,15 @@ export const dropHandler = async ({
   try {
     setIsUploading(true);
     const data = await uploadToSupabase(file);
+
+    console.log(data?.id, data?.path);
     console.log(data, "data coming from the supabase");
 
     if (!data?.id || !data?.path) {
-      toast.error("data failed", { duration: 2000 });
+      toast.error("data failed1111", {
+        duration: 2000,
+        position: "top-center",
+      });
       return;
     }
 

@@ -22,13 +22,17 @@ const FileUpload = () => {
     Error,
     CreateChatInput
   >({
-    mutationFn: async ({ id, path }) => {
-      const { data } = await axios.post("/api/create-chat", { id, path });
+    mutationFn: async ({ id, path, fileName }) => {
+      const { data } = await axios.post("/api/create-chat", {
+        id,
+        path,
+        fileName,
+      });
       return data;
     },
   });
 
-  const router= useRouter()
+  const router = useRouter();
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/pdf": [".pdf"],

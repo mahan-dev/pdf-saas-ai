@@ -11,7 +11,7 @@ interface ChatProps {
 
 const ChatSidebar = ({ chats, chatId }: ChatProps) => {
   return (
-    <div className="w-full p-2 h-screen bg-gray-900">
+    <div className="w-full  p-2 h-screen bg-gray-900">
       <Link href="/">
         <Button className="w-full border border-dashed  border-white">
           New Chat
@@ -19,10 +19,10 @@ const ChatSidebar = ({ chats, chatId }: ChatProps) => {
         </Button>
       </Link>
 
-      <div className="flex ">
+      <div className="flex flex-col ">
         {chats?.map((item) => (
           <Link href={"/"} key={item.id}>
-            {item.fileKey}
+            <p className="text-red-500 break-all truncate ">{item.pdfName}</p>
           </Link>
         ))}
       </div>

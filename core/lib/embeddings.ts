@@ -11,10 +11,8 @@ const getEmbeddings = async (text: string): Promise<number[]> => {
     const response = await ai.models.embedContent({
       model: "gemini-embedding-001",
       contents: text.replace(/\n/g, " "),
-      // input: text.replace(/\n/g, " "),
-      // encoding_format: "float",
     });
- 
+
     console.log(response.embeddings);
 
     return response.embeddings?.[0].values ?? [];

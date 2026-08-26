@@ -22,7 +22,9 @@ const page = async () => {
 
           <div className="flex flex-col gap-1 items-center">
             {isAuth && (
-              <Button className={"mt-1.5 cursor-pointer"}>go to Chats</Button>
+              <Link href={"/chat"}>
+                <Button className={"mt-1.5 cursor-pointer"}>go to Chats</Button>
+              </Link>
             )}
             <p className="text-slate-600 max-w-xl">
               join millions of students, researchers and professionals to

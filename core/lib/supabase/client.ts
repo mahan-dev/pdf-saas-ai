@@ -23,7 +23,12 @@ export const uploadToSupabase = async (file: File) => {
     }
 
     console.log("Upload successful:", data);
-    return data;
+    return {
+      id: data.id,
+      path: data.path,
+      fullPath: data.fullPath,
+      fileName: file.name,
+    };
   } catch (error) {
     console.log(error);
   }

@@ -1,3 +1,4 @@
+import { CreateChatInput } from "@/core/helper/dropHandler";
 import { db } from "@/core/lib/db";
 import { chats } from "@/core/lib/db/schema";
 import { loadSupabaseIntoPinecone } from "@/core/lib/pinecone";
@@ -19,7 +20,7 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const body = await req.json();
-    const { id, path } = body;
+    const { id, path, fileName } = body as CreateChatInput;
     console.log("🛬 ~ route.ts:6 -> id: ", id);
     console.log("🔥 ~ route.ts:6 -> path: ", path);
 
@@ -36,7 +37,7 @@ export const POST = async (req: NextRequest) => {
       .insert(chats)
       .values({
         fileKey: path,
-        pdfName: id,
+        pdfName: fileName,
         pdfUrl,
         userId,
       })
