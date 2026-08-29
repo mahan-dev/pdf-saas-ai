@@ -58,7 +58,7 @@ export const dropHandler = async ({
     console.log(data, "data coming from the supabase");
 
     if (!data?.id || !data?.path) {
-      toast.error("data failed1111", {
+      toast.error("data failed", {
         duration: 2000,
         position: "top-center",
       });

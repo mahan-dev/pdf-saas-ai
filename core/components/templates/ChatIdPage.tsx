@@ -2,6 +2,7 @@ import React from "react";
 import ChatSidebar from "@/core/components/templates/ChatSidebar";
 import PDFViewer from "@/core/components/templates/PDFViewer";
 import { DrizzleChat } from "@/core/lib/db/schema";
+import ChatBot from "@/core/components/templates/ChatBot";
 
 interface ChatProps {
   isChat: DrizzleChat;
@@ -22,14 +23,8 @@ const ChatIdPage = ({ isChat, chatsDb, chatId }: ChatProps) => {
         <PDFViewer pdfUrl={isChat?.pdfUrl || ""} />
 
         {/* chatBOt */}
-        <div className="flex flex-3 p-3  border-l-slate-200 overflow-auto">
-          <div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta
-            praesentium impedit cum sequi suscipit recusandae eveniet.
-            Reprehenderit consectetur non maiores doloribus iste inventore,
-            ratione fuga nemo cumque blanditiis qui atque?
-          </div>
-        </div>
+
+        <ChatBot chatId={chatId} />
       </div>
     </section>
   );

@@ -23,7 +23,6 @@ export const POST = async (req: NextRequest) => {
     const { id, path, fileName } = body as CreateChatInput;
     console.log("🛬 ~ route.ts:6 -> id: ", id);
     console.log("🔥 ~ route.ts:6 -> path: ", path);
-
     await loadSupabaseIntoPinecone(path);
 
     const pdfUrl = getSupabaseUrl(path);

@@ -1,9 +1,11 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+
 import { Button } from "../ui/button";
 import { PlusCircle } from "lucide-react";
 import { DrizzleChat } from "@/core/lib/db/schema";
 import { cn } from "@/core/lib/utils";
+import { redirect } from "next/navigation";
 
 interface ChatProps {
   chats: DrizzleChat[];
@@ -27,10 +29,10 @@ const ChatSidebar = ({ chats, chatId }: ChatProps) => {
 
         <div className="flex flex-col gap-1">
           {chats?.map((item) => (
-            <Link href={`/chat/${chatId}`} key={item.id}>
+            <Link href={`/chat/${item.id}`} key={item.id}>
               <p
                 className={`
-              text-white break-all truncate
+              text-white break-all truncate 
               ${item.id === chatId ? "hover:bg-none" : "transition-all duration-150 rounded-md p-2 hover:bg-zinc-600 "}
             
               ${item.id === chatId ? "bg-blue-700 rounded-md p-2 " : ""}
@@ -40,6 +42,11 @@ const ChatSidebar = ({ chats, chatId }: ChatProps) => {
               </p>
             </Link>
           ))}
+        </div>
+
+        <div className="flex gap-2.5 text-slate-400 p-3 absolute bottom-0 left-0">
+          <span>Home</span>
+          <span>Source</span>
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { LogIn } from "lucide-react";
 import FileUpload from "@/core/components/templates/FileUpload";
+import { Input } from "@/core/components/ui/input";
 
 const page = async () => {
   const { userId } = await auth();
@@ -13,6 +14,7 @@ const page = async () => {
 
   return (
     <div className=" min-h-screen  flex items-center justify-center  bg-linear-to-r from-indigo-300 to-purple-400">
+      {" "}
       <div className="absolute top-1/2  left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
         <div className="flex  flex-col justify-center items-center">
           <div className="flex gap-1.5 items-center">

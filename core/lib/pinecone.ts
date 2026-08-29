@@ -38,11 +38,12 @@ const loadSupabaseIntoPinecone = async (fileKey: string) => {
 
   const client = await getPinecone();
 
-  const piconeIndex = client.index({ name: "pdf-saas-2" });
+  const pineconeIndex = client.index({ name: "pdf-saas-2" });
+
   console.log("inserting vectors into pinecone");
 
   const nameSpace = convertToAscii(fileKey);
-  await pineconeUtils(vectors, piconeIndex, nameSpace);
+  await pineconeUtils(vectors, pineconeIndex, nameSpace);
 };
 
 const embedDocument = async (doc: Document): Promise<PineconeRecord> => {
