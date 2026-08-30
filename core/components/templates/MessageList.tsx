@@ -1,4 +1,5 @@
 import { UIMessage } from "ai";
+import { Loader2 } from "lucide-react";
 
 type MyUiMessages = UIMessage & {
   content: string;
@@ -6,9 +7,17 @@ type MyUiMessages = UIMessage & {
 
 interface MessageProps {
   messages: MyUiMessages[];
+  isLoading: boolean;
 }
 
-const MessageList = ({ messages }: MessageProps) => {
+const MessageList = ({ messages, isLoading }: MessageProps) => {
+  if (isLoading)
+    return (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin">
+        <Loader2 />
+      </div>
+    );
+
   return (
     <div className="flex flex-col gap-2">
       {messages.map((item) => (

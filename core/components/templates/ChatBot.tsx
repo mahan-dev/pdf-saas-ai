@@ -22,7 +22,7 @@ type ChatMessage = UIMessage & {
 };
 
 const ChatBot = ({ chatId }: ChatProps) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
       const { data } = await axios.post("/api/get-messages", {
@@ -76,9 +76,9 @@ const ChatBot = ({ chatId }: ChatProps) => {
       ref={messageContainerRef}
     >
       <section className="w-full flex flex-col p-1 min-h-screen ">
-        <h3 className="text-2xl font-bold sticky top-0 inset-x-0">Chat</h3>
+        <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">Chat</h3>
 
-        <MessageList messages={messages} />
+        <MessageList messages={messages} isLoading={isLoading} />
         {status === "error" && (
           <div className="w-fit mt-2 p-1 bg-red-200  rounded-md text-red-500">
             An Error occurred
