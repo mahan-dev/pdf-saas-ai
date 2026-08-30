@@ -31,7 +31,6 @@ export const dropHandler = async ({
   router,
 }: DropProps) => {
   const file = acceptedFiles[0];
-  console.log("🎤 ~ dropHandler.ts:31 -> file: ", file);
 
   if (!file) {
     toast.error("file should be pdf !", {
@@ -53,9 +52,6 @@ export const dropHandler = async ({
   try {
     setIsUploading(true);
     const data = await uploadToSupabase(file);
-
-    console.log(data?.id, data?.path);
-    console.log(data, "data coming from the supabase");
 
     if (!data?.id || !data?.path) {
       toast.error("data failed", {

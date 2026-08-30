@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { PlusCircle } from "lucide-react";
 import { DrizzleChat } from "@/core/lib/db/schema";
 import { cn } from "@/core/lib/utils";
-import { redirect } from "next/navigation";
 
 interface ChatProps {
   chats: DrizzleChat[];

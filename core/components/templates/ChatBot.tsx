@@ -6,38 +6,36 @@ import { useChat } from "@ai-sdk/react";
 import { Send } from "lucide-react";
 import { Button } from "../ui/button";
 import MessageList from "./MessageList";
-import { DefaultChatTransport, ModelMessage, UIMessage } from "ai";
+
+import { DefaultChatTransport, UIMessage } from "ai";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 interface ChatProps {
   chatId: number;
 }
+
+type ChatMessage = UIMessage & {
+  chatId: number;
+  content: string;
+  createdAt: string;
+};
+
 const ChatBot = ({ chatId }: ChatProps) => {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
-      console.log("🚀 REQUESTING MESSAGES, chatId:", chatId);
-
       const { data } = await axios.post("/api/get-messages", {
         chatId,
       });
-
-      console.log("✅ API RESPONSE:", data);
-
       return data;
     },
   });
 
-  console.log("🌈 DATA:", data);
-  console.log("⏳ LOADING:", isLoading);
-  console.log("❌ ERROR:", error);
-  console.log("🆔 CHAT ID:", chatId);
-
   const [input, setInput] = useState("");
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
-  const { messages, setMessages, sendMessage, status } = useChat({
+  const { messages, setMessages, sendMessage, status } = useChat<ChatMessage>({
     messages: data || [],
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -52,10 +50,10 @@ const ChatBot = ({ chatId }: ChatProps) => {
       setMessages(data);
     }
   }, [data, setMessages]);
-  console.log(messages, "from client");
 
   const submitHandler = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!input.trim()) return;
     sendMessage({ text: input });
     setInput("");

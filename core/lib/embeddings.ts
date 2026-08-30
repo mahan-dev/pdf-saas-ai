@@ -13,11 +13,9 @@ const getEmbeddings = async (text: string): Promise<number[]> => {
       contents: text.replace(/\n/g, " "),
     });
 
-    console.log(response.embeddings);
-
     return response.embeddings?.[0].values ?? [];
   } catch (error) {
-    console.log("error while calling api ");
+    console.log("error while calling api ", error);
     throw error;
   }
 };

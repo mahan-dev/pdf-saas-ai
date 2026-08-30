@@ -5,9 +5,8 @@ import {
   convertToModelMessages,
   createUIMessageStreamResponse,
   toUIMessageStream,
-  createUIMessageStream,
   UserModelMessage,
-  ModelMessage,
+  UIMessage,
 } from "ai";
 import { createGroq } from "@ai-sdk/groq";
 import { NextResponse } from "next/server";
@@ -35,11 +34,6 @@ export const POST = async (req: Request) => {
   const fileKey = _chats[0].fileKey;
 
   const lastMessages = messages[messages.length - 1];
-  console.log(lastMessages, "lastMessage 🎆");
-  // const query = lastMessages.parts
-  //   .filter((part: any) => part.type === "text")
-  //   .map((part: any) => part.text)
-  //   .join("");
 
   const context = await getContext(
     lastMessages.parts[0].text as string,
@@ -72,6 +66,11 @@ export const POST = async (req: Request) => {
   
   AI assistant will not invent anything that is not drawn directly from the context.
   `;
+
+  type MixedMessage = UIMessage & {
+    role: "user" | "system";
+  };
+
   try {
     const response = streamText({
       model: groq("openai/gpt-oss-120b"),
@@ -80,7 +79,7 @@ export const POST = async (req: Request) => {
       instructions,
 
       messages: await convertToModelMessages(
-        messages.filter((message: UserModelMessage) => message.role === "user"),
+        messages.filter((message: MixedMessage) => message.role === "user"),
       ),
 
       onEnd: async ({ text }) => {
