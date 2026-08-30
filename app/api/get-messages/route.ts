@@ -7,10 +7,13 @@ export const runtime = "nodejs";
 
 export const POST = async (req: Request) => {
   const { chatId } = await req.json();
+  console.log("server side is running");
   const _messages = await db
     .select()
     .from(messages)
     .where(eq(messages.chatId, chatId));
 
-  return NextResponse.json({ status: "Success", _messages });
+  console.log(_messages, "messages arrived");
+
+  return NextResponse.json(_messages);
 };
