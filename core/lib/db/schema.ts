@@ -31,7 +31,7 @@ export const messages = pgTable("messages", {
   role: userSystemEnum("role").notNull(),
 });
 
-export const userSubscription = pgTable("user_subscriptions", {
+export const userSubscriptions = pgTable("user_subscriptions", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id", { length: 256 }).notNull().unique(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 256 })

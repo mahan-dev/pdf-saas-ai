@@ -76,7 +76,9 @@ const ChatBot = ({ chatId }: ChatProps) => {
       ref={messageContainerRef}
     >
       <section className="w-full flex flex-col p-1 min-h-screen ">
-        <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">Chat</h3>
+        <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
+          Chat
+        </h3>
 
         <MessageList messages={messages} isLoading={isLoading} />
         {status === "error" && (

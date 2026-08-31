@@ -1,10 +1,12 @@
 "use client";
 import Link from "next/link";
 
-import { Button } from "../ui/button";
+import { Button } from "@/core/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { DrizzleChat } from "@/core/lib/db/schema";
 import { cn } from "@/core/lib/utils";
+import axios from "axios";
+import { useState } from "react";
 
 interface ChatProps {
   chats: DrizzleChat[];
@@ -12,6 +14,20 @@ interface ChatProps {
 }
 
 const ChatSidebar = ({ chats, chatId }: ChatProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const subscriptionHandler = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/api/stripe");
+      window.location.href = data.url;
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="flex flex-1  max-w-xs">
       <div className="w-full p-3 h-screen bg-gray-900 overflow-auto">
@@ -43,9 +59,19 @@ const ChatSidebar = ({ chats, chatId }: ChatProps) => {
           ))}
         </div>
 
-        <div className="flex gap-2.5 text-slate-400 p-3 absolute bottom-0 left-0">
-          <span>Home</span>
-          <span>Source</span>
+        <div className="flex flex-col gap-2 text-slate-400 p-3 absolute bottom-0 left-0">
+          <div className="flex gap-2.5">
+            <span>Home</span>
+            <span>Source</span>
+          </div>
+
+          <Button
+            className="w-fit bg-slate-800 text-white rounded-md  p-2 cursor-pointer "
+            onClick={subscriptionHandler}
+            disabled={loading}
+          >
+            Upgrade To Pro
+          </Button>
         </div>
       </div>
     </section>
