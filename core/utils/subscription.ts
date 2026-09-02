@@ -22,7 +22,7 @@ export const checkSubscription = async (): Promise<boolean> => {
   const userSubscription = _userSubscription[0];
   const isValid =
     userSubscription.stripePriceId &&
-    userSubscriptions.stripeCurrentPeriodEnd.getTime()! + dayInMs > Date.now();
+    userSubscription.stripeCurrentPeriodEnd!.getTime() + dayInMs > Date.now();
 
   return !!isValid;
 };

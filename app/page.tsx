@@ -3,14 +3,28 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
-import { LogIn } from "lucide-react";
+import { ArrowRight, LogIn } from "lucide-react";
 import FileUpload from "@/core/components/templates/FileUpload";
 import { Input } from "@/core/components/ui/input";
+import { checkSubscription } from "@/core/utils/subscription";
+import SubscriptionButton from "@/core/components/templates/SubscriptionButton";
+import { db } from "@/core/lib/db";
+import { chats } from "@/core/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 const page = async () => {
   const { userId } = await auth();
 
   const isAuth = !!userId;
+  const isPro = await checkSubscription();
+  let firstChat;
+
+  if (userId) {
+    firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
+    if (firstChat) {
+      firstChat = firstChat[0];
+    }
+  }
 
   return (
     <div className=" min-h-screen  flex items-center justify-center  bg-linear-to-r from-indigo-300 to-purple-400">
@@ -22,17 +36,21 @@ const page = async () => {
             <UserButton afterSwitchSessionUrl="/" />
           </div>
 
-          <div className="flex flex-col gap-1 items-center">
-            {isAuth && (
-              <Link href={"/chat"}>
-                <Button className={"mt-1.5 cursor-pointer"}>go to Chats</Button>
+          <div className="flex gap-1 items-center mt-1.5">
+            {isAuth && firstChat && (
+              <Link href={`/chats/${firstChat.id}`}>
+                <Button className={" p-4 py-5 cursor-pointer"}>
+                  go to Chats
+                  <ArrowRight className="w-4 h-4 hover:transition hover:translate-x-1" />
+                </Button>
               </Link>
             )}
-            <p className="text-slate-600 max-w-xl">
-              join millions of students, researchers and professionals to
-              instantly answer questions and understand research with ai
-            </p>
+            {<SubscriptionButton isPro={isPro} />}
           </div>
+          <p className="text-slate-60 mt-2 max-w-xl">
+            join millions of students, researchers and professionals to
+            instantly answer questions and understand research with ai
+          </p>
 
           <div className="w-full mt-2">
             {isAuth ? (

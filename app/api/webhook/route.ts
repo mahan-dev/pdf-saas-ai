@@ -17,9 +17,9 @@ export const POST = async (req: Request) => {
   try {
     event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
   } catch (error) {
-    return (
-      NextResponse.json({ status: "Failed", error: "Server Error" }),
-      { status: 500 }
+    return NextResponse.json(
+      { status: "Failed", error: "Server Error" },
+      { status: 500 },
     );
   }
 
@@ -52,10 +52,12 @@ export const POST = async (req: Request) => {
 
     await db.insert(userSubscriptions).values({
       userId: session.metadata.userId,
-      stripeSubscriptionId: subscription.id,
+      stripeSubscriptionId: subscription.items.data[0].id,
       stripeCustomerId: subscription.customer as string,
       stripePriceId: subscription.items.data[0].price.id,
-      stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      stripeCurrentPeriodEnd: new Date(
+        subscription.items.data[0].current_period_end * 1000,
+      ),
     });
   }
 
@@ -68,7 +70,7 @@ export const POST = async (req: Request) => {
       .set({
         stripePriceId: subscription.items.data[0].id,
         stripeCurrentPeriodEnd: new Date(
-          subscription.stripeCurrentPeriodEnd * 1000,
+          subscription.items.data[0].current_period_end * 1000,
         ),
       })
       .where(eq(userSubscriptions.stripeSubscriptionId, subscription.id));
