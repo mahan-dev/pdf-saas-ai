@@ -17,13 +17,9 @@ const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
     }
   };
 
-  {
-    console.log(isPro);
-  }
-
   return (
     <Button
-      className={"p-4 py-5"}
+      className="px-4 py-5 cursor-pointer"
       onClick={handleSubscription}
       disabled={loading}
     >

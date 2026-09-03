@@ -11,9 +11,10 @@ import { useState } from "react";
 interface ChatProps {
   chats: DrizzleChat[];
   chatId: number;
+  isPro: boolean;
 }
 
-const ChatSidebar = ({ chats, chatId }: ChatProps) => {
+const ChatSidebar = ({ chats, chatId, isPro }: ChatProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const subscriptionHandler = async () => {
@@ -70,7 +71,7 @@ const ChatSidebar = ({ chats, chatId }: ChatProps) => {
             onClick={subscriptionHandler}
             disabled={loading}
           >
-            Upgrade To Pro
+            {isPro ? "Manage subscription" : "Upgrade To Pro"}
           </Button>
         </div>
       </div>

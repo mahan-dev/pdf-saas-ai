@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { ArrowRight, LogIn } from "lucide-react";
 import FileUpload from "@/core/components/templates/FileUpload";
-import { Input } from "@/core/components/ui/input";
+
 import { checkSubscription } from "@/core/utils/subscription";
 import SubscriptionButton from "@/core/components/templates/SubscriptionButton";
 import { db } from "@/core/lib/db";
@@ -28,7 +28,6 @@ const page = async () => {
 
   return (
     <div className=" min-h-screen  flex items-center justify-center  bg-linear-to-r from-indigo-300 to-purple-400">
-      {" "}
       <div className="absolute top-1/2  left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
         <div className="flex  flex-col justify-center items-center">
           <div className="flex gap-1.5 items-center">
@@ -36,16 +35,18 @@ const page = async () => {
             <UserButton afterSwitchSessionUrl="/" />
           </div>
 
-          <div className="flex gap-1 items-center mt-1.5">
+          <div className="flex gap-1 items-center my-3">
             {isAuth && firstChat && (
-              <Link href={`/chats/${firstChat.id}`}>
-                <Button className={" p-4 py-5 cursor-pointer"}>
-                  go to Chats
-                  <ArrowRight className="w-4 h-4 hover:transition hover:translate-x-1" />
-                </Button>
-              </Link>
+              <>
+                <Link href={`/chats/${firstChat.id}`}>
+                  <Button className={" p-4 py-5 cursor-pointer"}>
+                    go to Chats
+                    <ArrowRight className="w-4 h-4 hover:transition hover:translate-x-1" />
+                  </Button>
+                </Link>
+                <SubscriptionButton isPro={isPro} />
+              </>
             )}
-            {<SubscriptionButton isPro={isPro} />}
           </div>
           <p className="text-slate-60 mt-2 max-w-xl">
             join millions of students, researchers and professionals to

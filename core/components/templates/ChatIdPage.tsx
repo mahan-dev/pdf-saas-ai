@@ -3,6 +3,7 @@ import ChatSidebar from "@/core/components/templates/ChatSidebar";
 import PDFViewer from "@/core/components/templates/PDFViewer";
 import { DrizzleChat } from "@/core/lib/db/schema";
 import ChatBot from "@/core/components/templates/ChatBot";
+import { checkSubscription } from "@/core/utils/subscription";
 
 interface ChatProps {
   isChat: DrizzleChat;
@@ -10,13 +11,15 @@ interface ChatProps {
   chatId: number;
 }
 
-const ChatIdPage = ({ isChat, chatsDb, chatId }: ChatProps) => {
+const ChatIdPage = async ({ isChat, chatsDb, chatId }: ChatProps) => {
+  const isPro = await checkSubscription();
+
   return (
     <section className="flex max-h-screen ">
       <div className="flex w-full max-h-screen">
         {/* sideBar */}
 
-        <ChatSidebar chats={chatsDb} chatId={chatId} />
+        <ChatSidebar chats={chatsDb} chatId={chatId} isPro={isPro} />
 
         {/* PDF Viewer */}
 
