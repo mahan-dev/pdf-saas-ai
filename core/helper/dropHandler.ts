@@ -66,7 +66,7 @@ export const dropHandler = async ({
         console.log("🚀 ~ dropHandler.ts:56 -> chat_id: ", chat_id);
         toast.success("Chat has been created !", { position: "top-center" });
         await NotificationHandler();
-        router.push(`/chat/${chat_id}`);
+        router.push(`/chats/${chat_id}`);
       },
       onError: (error) => {
         console.log("something wen't wrong ", error);
