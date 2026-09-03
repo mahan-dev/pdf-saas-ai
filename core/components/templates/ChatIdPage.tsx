@@ -1,4 +1,3 @@
-import React from "react";
 import ChatSidebar from "@/core/components/templates/ChatSidebar";
 import PDFViewer from "@/core/components/templates/PDFViewer";
 import { DrizzleChat } from "@/core/lib/db/schema";

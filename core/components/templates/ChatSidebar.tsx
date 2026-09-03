@@ -2,11 +2,12 @@
 import Link from "next/link";
 
 import { Button } from "@/core/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Trash2 } from "lucide-react";
 import { DrizzleChat } from "@/core/lib/db/schema";
 import { cn } from "@/core/lib/utils";
 import axios from "axios";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 interface ChatProps {
   chats: DrizzleChat[];
@@ -29,9 +30,14 @@ const ChatSidebar = ({ chats, chatId, isPro }: ChatProps) => {
     }
   };
 
+  const removeChat = async (id: number) => {
+    const { status } = await axios.patch("/api/delete-chat", { id });
+    if (status === 201) redirect("/");
+  };
+
   return (
-    <section className="flex flex-1  max-w-xs">
-      <div className="w-full p-3 h-screen bg-gray-900 overflow-auto">
+    <section className="flex  flex-1  max-w-xs">
+      <div className="w-full flex flex-col p-3 h-screen bg-gray-900 overflow-auto">
         <Link className="w-full inline-block mb-3" href="/">
           <Button
             className={cn(
@@ -43,24 +49,36 @@ const ChatSidebar = ({ chats, chatId, isPro }: ChatProps) => {
           </Button>
         </Link>
 
-        <div className="flex flex-col gap-1">
+        <div className="w-full flex flex-col gap-1">
           {chats?.map((item) => (
-            <Link href={`/chat/${item.id}`} key={item.id}>
+            <div key={item.id}>
               <p
                 className={`
-              text-white break-all truncate 
+                  flex justify-between gap-2 items-center text-white break-all truncate cursor-pointer
               ${item.id === chatId ? "hover:bg-none" : "transition-all duration-150 rounded-md p-2 hover:bg-zinc-600 "}
             
               ${item.id === chatId ? "bg-blue-700 rounded-md p-2 " : ""}
                 `}
               >
-                {item.pdfName}
+                <span
+                  onClick={() => {
+                    redirect(`/chats/${item.id}`);
+                  }}
+                >
+                  {item.pdfName.substring(0, 15)}
+                </span>
+                <Button
+                  onClick={() => removeChat(item.id)}
+                  className="p-2 cursor-pointer"
+                >
+                  <Trash2 />
+                </Button>
               </p>
-            </Link>
+            </div>
           ))}
         </div>
 
-        <div className="flex flex-col gap-2 text-slate-400 p-3 absolute bottom-0 left-0">
+        <div className="flex flex-col mt-auto gap-2 text-slate-400 p-3 ">
           <div className="flex gap-2.5">
             <span>Home</span>
             <span>Source</span>

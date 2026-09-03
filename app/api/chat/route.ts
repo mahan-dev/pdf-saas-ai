@@ -5,7 +5,6 @@ import {
   convertToModelMessages,
   createUIMessageStreamResponse,
   toUIMessageStream,
-  UserModelMessage,
   UIMessage,
 } from "ai";
 import { createGroq } from "@ai-sdk/groq";
