@@ -14,7 +14,7 @@ const ChatIdPage = async ({ isChat, chatsDb, chatId }: ChatProps) => {
   const isPro = await checkSubscription();
 
   return (
-    <section className="flex max-h-screen ">
+    <section className="flex h-screen ">
       <div className="flex w-full max-h-screen">
         {/* sideBar */}
 

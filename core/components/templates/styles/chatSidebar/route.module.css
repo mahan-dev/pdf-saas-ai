@@ -1,0 +1,6 @@
+@reference "tailwindcss";
+
+.chatSidebar {
+    @apply w-64 flex  flex-1  max-w-xs transition-all duration-200   ;
+}
+

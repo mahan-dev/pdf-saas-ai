@@ -1,0 +1,6 @@
+@reference "tailwindcss";
+
+
+.chat {
+    @apply max-w-sm  bg-white border-l-slate-200 overflow-auto transition-all duration-200;
+}

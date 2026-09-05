@@ -6,10 +6,13 @@ import { useChat } from "@ai-sdk/react";
 import { Send } from "lucide-react";
 import { Button } from "../ui/button";
 import MessageList from "./MessageList";
+import { BotMessageSquare } from "lucide-react";
 
 import { DefaultChatTransport, UIMessage } from "ai";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import styles from "@/core/components/templates/styles/chatBot/route.module.css";
+import { cn } from "@/core/lib/utils";
 
 interface ChatProps {
   chatId: number;
@@ -22,6 +25,12 @@ type ChatMessage = UIMessage & {
 };
 
 const ChatBot = ({ chatId }: ChatProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [input, setInput] = useState("");
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+  const botIconRef = useRef<HTMLDivElement>(null);
+
   const { data, isLoading } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
@@ -31,9 +40,6 @@ const ChatBot = ({ chatId }: ChatProps) => {
       return data;
     },
   });
-
-  const [input, setInput] = useState("");
-  const messageContainerRef = useRef<HTMLDivElement>(null);
 
   const { messages, setMessages, sendMessage, status } = useChat<ChatMessage>({
     messages: data || [],
@@ -69,43 +75,84 @@ const ChatBot = ({ chatId }: ChatProps) => {
     });
   }, [messages]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const clickHandler = (event: MouseEvent) => {
+      const messageRef = messageContainerRef.current;
+      const botRef = botIconRef.current;
+
+      if (
+        messageRef &&
+        !messageRef.contains(event.target as Node) &&
+        botRef &&
+        !botRef.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", clickHandler);
+    return () => removeEventListener("mousedown", clickHandler);
+  }, [isOpen, setIsOpen]);
+
   return (
-    <div
-      className="flex flex-3 border-l-slate-200 overflow-auto"
-      id="message_container"
-      ref={messageContainerRef}
-    >
-      <section className="w-full flex flex-col p-1 min-h-screen ">
-        <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
-          Chat
-        </h3>
+    <section className="flex-3 max-w-sm max-lg:flex-0">
+      <div
+        className="flex bg-white absolute top-2 right-2 p-2 border rounded-md shadow-md   lg:hidden"
+        onClick={() => setIsOpen((prev) => !prev)}
+        ref={botIconRef}
+      >
+        <BotMessageSquare />
+      </div>
+      {isOpen && <div className="fixed inset-0 bg-black/30"></div>}
+      <div
+        // `${styles.chat}  ${isOpen ? "translate-x-0 absolute top-0 right-0" : "max-lg:fixed   max-lg:translate-x-full"}
+        className={cn(
+          styles.chat,
 
-        <MessageList messages={messages} isLoading={isLoading} />
-        {status === "error" && (
-          <div className="w-fit mt-2 p-1 bg-red-200  rounded-md text-red-500">
-            An Error occurred
-          </div>
+          isOpen
+            ? "fixed inset-y-0 right-0 z-20 translate-x-0 "
+            : "fixed inset-y-0 right-0 z-20 translate-x-full",
+
+          "transition-transform duration-200",
+          "lg:static lg:z-auto lg:w-auto lg:translate-x-0",
         )}
+        id="message_container"
+        ref={messageContainerRef}
+      >
+        <section className="w-full  flex-col p-1 min-h-screen  ">
+          <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
+            Chat
+          </h3>
 
-        <form onSubmit={submitHandler}>
-          <div className="flex my-4 gap-1">
-            <Input
-              value={input}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setInput(e.target.value)
-              }
-              placeholder="Ask any questions..."
-            />
-            <Button
-              type="submit"
-              className="bg-blue-600 cursor-pointer hover:opacity-80 hover:bg-blue-600"
-            >
-              <Send />
-            </Button>
-          </div>
-        </form>
-      </section>
-    </div>
+          <MessageList messages={messages} isLoading={isLoading} />
+          {status === "error" && (
+            <div className="w-fit mt-2 p-1 bg-red-200  rounded-md text-red-500">
+              An Error occurred
+            </div>
+          )}
+
+          <form onSubmit={submitHandler}>
+            <div className="flex my-4 gap-1">
+              <Input
+                value={input}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setInput(e.target.value)
+                }
+                placeholder="Ask any questions..."
+              />
+              <Button
+                type="submit"
+                className="bg-blue-600 cursor-pointer hover:opacity-80 hover:bg-blue-600"
+              >
+                <Send />
+              </Button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
   );
 };
 
