@@ -14,11 +14,7 @@ interface PageProps {
 
 const ChatPage = async ({ params }: PageProps) => {
   const { chatId } = await params;
-  const convertedChatId = +chatId;
-
-  if (isNaN(convertedChatId)) {
-    redirect("/");
-  }
+  const convertedChatId = chatId;
 
   const { userId } = await auth();
   if (!userId) {
