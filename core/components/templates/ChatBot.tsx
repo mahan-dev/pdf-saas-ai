@@ -15,7 +15,7 @@ import styles from "@/core/components/templates/styles/chatBot/route.module.css"
 import { cn } from "@/core/lib/utils";
 
 interface ChatProps {
-  chatId: number;
+  chatId: string;
 }
 
 type ChatMessage = UIMessage & {

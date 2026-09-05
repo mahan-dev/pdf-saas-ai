@@ -32,7 +32,7 @@ const ChatPage = async ({ params }: PageProps) => {
   }
 
   return (
-    <ChatIdPage isChat={isChat} chatsDb={chatsDb} chatId={convertedChatId} />
+    <ChatIdPage isChat={isChat} chatsDb={chatsDb} chatId={chatId} />
   );
 };
 

@@ -12,7 +12,7 @@ import styles from "@/core/components/templates/styles/chatSidebar/route.module.
 
 interface ChatProps {
   chats: DrizzleChat[];
-  chatId: number;
+  chatId: string;
   isPro: boolean;
 }
 
@@ -54,7 +54,7 @@ const ChatSidebar = ({ chats, chatId, isPro }: ChatProps) => {
     }
   };
 
-  const removeChat = async (id: number) => {
+  const removeChat = async (id: string) => {
     const { status } = await axios.patch("/api/delete-chat", { id });
     if (status === 201) redirect("/");
   };
