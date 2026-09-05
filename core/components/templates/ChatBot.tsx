@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@/core/components/ui/input";
 
 import { useChat } from "@ai-sdk/react";
-import { Send } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { Button } from "../ui/button";
 import MessageList from "./MessageList";
 import { BotMessageSquare } from "lucide-react";
@@ -105,9 +105,9 @@ const ChatBot = ({ chatId }: ChatProps) => {
       >
         <BotMessageSquare />
       </div>
+
       {isOpen && <div className="fixed inset-0 bg-black/30"></div>}
       <div
-        // `${styles.chat}  ${isOpen ? "translate-x-0 absolute top-0 right-0" : "max-lg:fixed   max-lg:translate-x-full"}
         className={cn(
           styles.chat,
 
@@ -121,6 +121,10 @@ const ChatBot = ({ chatId }: ChatProps) => {
         id="message_container"
         ref={messageContainerRef}
       >
+        <X
+          className="w-8 h-8 text-black-300 p-1 absolute  top-3  right-6 z-20   border rounded-md cursor-pointer lg:hidden "
+          onClick={() => setIsOpen((prev) => !prev)}
+        />
         <section className="w-full  flex-col p-1 min-h-screen  ">
           <h3 className="text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
             Chat
