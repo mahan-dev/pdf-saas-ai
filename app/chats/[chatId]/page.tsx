@@ -14,7 +14,7 @@ interface PageProps {
 
 const ChatPage = async ({ params }: PageProps) => {
   const { chatId } = await params;
-  const convertedChatId = chatId;
+ 
 
   const { userId } = await auth();
   if (!userId) {
@@ -26,7 +26,7 @@ const ChatPage = async ({ params }: PageProps) => {
     return redirect("/");
   }
 
-  const isChat = chatsDb.find((chat) => chat.id === convertedChatId);
+  const isChat = chatsDb.find((chat) => chat.id === chatId);
   if (!isChat) {
     return redirect("/");
   }

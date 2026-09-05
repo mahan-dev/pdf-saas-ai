@@ -7,7 +7,7 @@ import { checkSubscription } from "@/core/utils/subscription";
 interface ChatProps {
   isChat: DrizzleChat;
   chatsDb: DrizzleChat[];
-  chatId: number;
+  chatId: string;
 }
 
 const ChatIdPage = async ({ isChat, chatsDb, chatId }: ChatProps) => {
