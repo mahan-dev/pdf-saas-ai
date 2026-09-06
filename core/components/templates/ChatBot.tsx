@@ -121,7 +121,7 @@ const ChatBot = ({ chatId }: ChatProps) => {
         id="message_container"
         ref={messageContainerRef}
       >
-        <section className="w-full  flex-col py-1 px-2.5 min-h-screen  ">
+        <section className="w-full relative  flex-col py-1 px-2.5 min-h-screen  ">
           <h3 className="flex  justify-between text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
             Chat
             <X
@@ -138,7 +138,7 @@ const ChatBot = ({ chatId }: ChatProps) => {
           )}
 
           <form onSubmit={submitHandler}>
-            <div className="flex my-4 gap-1">
+            <div className="flex absolute inset-x-0 px-2 bottom-0 my-4 gap-1">
               <Input
                 value={input}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
