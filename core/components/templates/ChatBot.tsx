@@ -99,7 +99,7 @@ const ChatBot = ({ chatId }: ChatProps) => {
   return (
     <section className="flex-3 max-w-sm max-lg:flex-0 overflow-y-auto">
       <div
-        className="flex bg-white absolute top-2 right-2 p-2 border rounded-md shadow-md lg:hidden cursor-pointer"
+        className="flex bg-white absolute top-2 right-2 p-2 border rounded-md shadow-md lg:hidden  cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
         ref={botIconRef}
       >
@@ -121,11 +121,11 @@ const ChatBot = ({ chatId }: ChatProps) => {
         id="message_container"
         ref={messageContainerRef}
       >
-        <section className="w-full  flex-col p-1 min-h-screen  ">
+        <section className="w-full  flex-col py-1 px-2.5 min-h-screen  ">
           <h3 className="flex  justify-between text-2xl p-2 rounded-md font-bold sticky top-0 inset-x-0 backdrop-blur-2xl">
             Chat
             <X
-              className="w-8 h-8 text-black-300 bg-white p-1 sticky  top-3  right-6 z-20   border rounded-md cursor-pointer lg:hidden "
+              className="w-8 h-8 text-black-300 bg-white p-1 sticky top-3 right-4 z-20 border rounded-md cursor-pointer lg:hidden "
               onClick={() => setIsOpen((prev) => !prev)}
             />
           </h3>

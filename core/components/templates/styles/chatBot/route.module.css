@@ -2,5 +2,5 @@
 
 
 .chat {
-    @apply bg-white border-l-slate-200 overflow-auto transition-all duration-200 max-lg:max-w-sm max-sm:w-full max-sm:max-w-max ;
+    @apply bg-white border-l-slate-200 overflow-auto transition-all duration-200 max-lg:max-w-sm max-sm:w-full max-sm:max-w-full ;
 }
